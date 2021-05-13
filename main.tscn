@@ -1,131 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://material/floor.material" type="Material" id=1]
 [ext_resource path="res://environment/sun.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
 
-[sub_resource type="Shader" id=2]
-code = "shader_type spatial;
-
-//render_mode ambient_light_disabled;
-
-const float PI = 3.1415926536f;
-
-uniform vec4 albedo : hint_color = vec4(1.0f);
-uniform sampler2D albedo_texture : hint_albedo;
-uniform bool clamp_diffuse_to_max = false;
-
-uniform int cuts : hint_range(1, 8) = 3;
-uniform float wrap : hint_range(-2.0f, 2.0f) = 0.0f;
-uniform float steepness : hint_range(1.0f, 8.0f);
-
-uniform bool use_attenuation = true;
-
-uniform bool use_specular = true;
-uniform float specular_strength : hint_range(0.0f, 1.0f) = 1.0f;
-uniform float specular_shininess : hint_range(0.0f, 32.0f) = 16.0f;
-uniform sampler2D specular_map : hint_albedo;
-
-uniform bool use_rim = true;
-uniform float rim_width : hint_range(0.0f, 16.0f) = 8.0f;
-uniform vec4 rim_color : hint_color = vec4(1.0f);
-
-uniform bool use_ramp = false;
-uniform sampler2D ramp : hint_albedo;
-
-uniform bool use_borders = false;
-uniform float border_width = 0.01f;
-
-varying vec3 vertex_pos;
-varying vec3 normal;
-
-float split_specular(float specular) {
-	return step(0.5f, specular);
-}
-
-void vertex() {
-	vertex_pos = VERTEX;
-	normal = NORMAL;
-}
-
-void fragment() {
-	ALBEDO = albedo.rgb * texture(albedo_texture, UV).rgb;
-}
-
-void light() {
-	// Attenuation.
-	float attenuation = 1.0f;
-	if (use_attenuation) {
-		attenuation = ATTENUATION.x;
-	}
-	
-	// Diffuse lighting.
-	float NdotL = dot(NORMAL, LIGHT);
-	float diffuse_amount = NdotL + (attenuation - 1.0) + wrap;
-	//float diffuse_amount = NdotL * attenuation + wrap;
-	diffuse_amount *= steepness;
-	float cuts_inv = 1.0f / float(cuts);
-	float diffuse_stepped = clamp(diffuse_amount + mod(1.0f - diffuse_amount, cuts_inv), 0.0f, 1.0f);
-
-	// Calculate borders.
-	float border = 0.0f;
-	if (use_borders) {
-		float corr_border_width = length(cross(NORMAL, LIGHT)) * border_width * steepness;
-		border = step(diffuse_stepped - corr_border_width, diffuse_amount)
-				 - step(1.0 - corr_border_width, diffuse_amount);
-	}
-	
-	// Apply diffuse result to different styles.
-	vec3 diffuse = ALBEDO.rgb * LIGHT_COLOR / PI;
-	if (use_ramp) {
-		diffuse *= texture(ramp, vec2(diffuse_stepped * (1.0f - border), 0.0f)).rgb;
-	} else {
-		diffuse *= diffuse_stepped * (1.0f - border);
-	}
-	
-	if (clamp_diffuse_to_max) {
-		// Clamp diffuse to max for multiple light sources.
-		DIFFUSE_LIGHT = max(DIFFUSE_LIGHT, diffuse);
-	} else {
-		DIFFUSE_LIGHT += diffuse;
-	}
-	
-	// Specular lighting.
-	if (use_specular) {
-		vec3 H = normalize(LIGHT + VIEW);
-		float NdotH = dot(NORMAL, H);
-		float specular_amount = max(pow(NdotH, specular_shininess*specular_shininess), 0.0f)
-							    * texture(specular_map, UV).r
-								* attenuation;
-		specular_amount = split_specular(specular_amount);
-		SPECULAR_LIGHT += specular_strength * specular_amount * LIGHT_COLOR;
-	}
-	
-	// Simple rim lighting.
-	if (use_rim) {
-		float NdotV = dot(NORMAL, VIEW);
-		float rim_light = pow(1.0 - NdotV, rim_width);
-		DIFFUSE_LIGHT += rim_light * rim_color.rgb * rim_color.a * LIGHT_COLOR / PI;
-	}
-}"
-
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
-shader_param/albedo = Color( 0.454902, 0.262745, 0.505882, 1 )
-shader_param/clamp_diffuse_to_max = false
-shader_param/cuts = 2
-shader_param/wrap = 0.0
-shader_param/steepness = 1.5
-shader_param/use_attenuation = true
-shader_param/use_specular = true
-shader_param/specular_strength = 1.0
-shader_param/specular_shininess = 16.0
-shader_param/use_rim = false
-shader_param/rim_width = 8.0
-shader_param/rim_color = Color( 1, 1, 1, 1 )
-shader_param/use_ramp = false
-shader_param/use_borders = false
-shader_param/border_width = 0.01
+[sub_resource type="SpatialMaterial" id=2]
+params_diffuse_mode = 4
+params_specular_mode = 3
+albedo_color = Color( 0.352941, 0.227451, 0.482353, 1 )
+roughness = 0.75
 
 [sub_resource type="BoxShape" id=1]
 
@@ -147,7 +30,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.22252, -9.64223 )
 mass = 2.0
 
 [node name="Mesh" type="CSGBox" parent="Box"]
-material_override = SubResource( 3 )
+material_override = SubResource( 2 )
 
 [node name="Hitbox" type="CollisionShape" parent="Box"]
+shape = SubResource( 1 )
+
+[node name="Box2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47332, 12.2393, -9.64223 )
+mass = 2.0
+
+[node name="Mesh" type="CSGBox" parent="Box2"]
+material_override = SubResource( 2 )
+
+[node name="Hitbox" type="CollisionShape" parent="Box2"]
 shape = SubResource( 1 )

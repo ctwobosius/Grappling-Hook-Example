@@ -4,23 +4,26 @@ extends KinematicBody
 onready var cam_helper := $CamHelper
 export var MOUSE_SENSITIVITY := .001
 export var speed := 4.0
+export var air_speed := .25
 export var friction := .25 # Higher -> more friction
 export var jump_strength := 32.0
 var velocity := Vector3()
 
 func _ready() -> void:
+	# Capture mouse at start
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta: float) -> void:
 	move(delta)
+	collide_with_rigidbodies()
 
 func move(delta: float) -> void:
+	# Get player input (forwards/back/side)
+	var input := get_forward_acceleration()
+	input += get_side_acceleration()
+	
 	# if on ground
 	if is_on_floor():
-		# Get player input (forwards/back/side)
-		var input := get_forward_acceleration()
-		input += get_side_acceleration()
-		
 		# Use player input
 		velocity += input * speed
 		
@@ -32,11 +35,26 @@ func move(delta: float) -> void:
 		if Input.is_action_just_pressed("jump"):
 			velocity += Vector3.UP * jump_strength
 	
+	# Else we are in the air
+	else:
+		velocity += input * air_speed
+	
 	# Gravity
 	velocity += Vector3.DOWN
 	
-	# Move player
-	velocity = move_and_slide(velocity, Vector3.UP)
+	# Move player using velocity, we want to have the UP vector as our up,
+	# the false at the end allows us to have better collisions
+	# with Rigidbodies, the rest are default arguments
+	velocity = move_and_slide(velocity, Vector3.UP, false, 4, .8, false)
+
+# Since we want better collisions, we have to do a lil work
+func collide_with_rigidbodies() -> void:
+	for index in get_slide_count():
+		var collision := get_slide_collision(index)
+		if collision.collider is RigidBody:
+			collision.collider.apply_central_impulse(
+				-collision.normal * .05 * velocity.length()
+			)
 
 func get_side_acceleration() -> Vector3:
 	return global_transform.basis.x * (
