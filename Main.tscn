@@ -24,7 +24,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.22252, -9.64223 )
 
 [node name="Hitbox" type="CollisionShape" parent="Box"]
 shape = SubResource( 1 )
-
-[node name="CSGBox" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.2535, 0 )
-use_collision = true
