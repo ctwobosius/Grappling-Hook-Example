@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Player/Player.gd"
+"path": "res://player/player.gd"
 } ]
 _global_script_class_icons={
 "Player": ""
@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GrappleHookExample"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -68,4 +68,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_environment="res://Environment/BetterWorldEnvironment.tres"
+environment/default_environment="res://environment/world_env.tres"
