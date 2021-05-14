@@ -58,13 +58,11 @@ shape = SubResource( 1 )
 script = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="Environment/GrappleThings"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -120.5
-margin_top = 18.0
-margin_right = 120.5
-margin_bottom = 32.0
-text = "Press HOME to restart, Q/E to grapple"
+anchor_right = 1.0
+margin_top = 17.0
+margin_bottom = 48.0
+text = "Press HOME to restart, Q/E to grapple,
+Click the game then press TAB to begin"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false

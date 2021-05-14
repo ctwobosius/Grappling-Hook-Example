@@ -39,8 +39,10 @@ func _physics_process(delta: float) -> void:
 	handle_hook()
 	if Input.is_action_pressed("slowmo"):
 		Engine.time_scale = .1
+		MOUSE_SENSITIVITY = .0002
 	else:
 		Engine.time_scale = 1
+		MOUSE_SENSITIVITY = .001
 	if Input.is_action_just_pressed("ui_home"):
 		translation = Vector3(0, 1, 0)
 
