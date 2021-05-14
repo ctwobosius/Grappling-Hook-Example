@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/fart.mp3-23e4728374f753db93d484843b60bf73.mp3str"
+
+[deps]
+
+source_file="res://sfx/fart.mp3"
+dest_files=[ "res://.import/fart.mp3-23e4728374f753db93d484843b60bf73.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
