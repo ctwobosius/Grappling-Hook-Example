@@ -156,7 +156,7 @@ func get_forward_acceleration() -> Vector3:
 
 func _input(event: InputEvent) -> void:
 	# So we can quit the game by pressing escape
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_released("ui_cancel"):
 		handle_mouse_capture()
 	# Fullscreen
 	elif event.is_action_pressed("fullscreen"):
