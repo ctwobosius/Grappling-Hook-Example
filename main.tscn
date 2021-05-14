@@ -57,6 +57,18 @@ shape = SubResource( 1 )
 [node name="GrappleThings" type="Spatial" parent="Environment"]
 script = ExtResource( 6 )
 
+[node name="Label" type="Label" parent="Environment/GrappleThings"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -69.5
+margin_top = 23.0
+margin_right = 69.5
+margin_bottom = 37.0
+text = "Press home to restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Grapple thing" type="CSGBox" parent="Environment/GrappleThings"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.3459, 24.6303 )
 material_override = ExtResource( 5 )
@@ -157,5 +169,5 @@ depth = 16.4405
 grapple_point = NodePath("../GrapplePoint")
 
 [node name="GrapplePoint" type="CSGSphere" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.930122, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1626, 0 )
 radius = 0.25

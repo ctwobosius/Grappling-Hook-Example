@@ -41,14 +41,17 @@ func _physics_process(delta: float) -> void:
 		Engine.time_scale = .1
 	else:
 		Engine.time_scale = 1
+	if Input.is_action_just_pressed("ui_home"):
+		translation = Vector3(0, 1, 0)
 
 
 # HOOK STUFF ---------------------------------------------------------
 
-func look_for_point() -> void:
-	var grapple_pt := get_node_or_null(grapple_point)
-	if grapple_pt and hook.is_colliding():
-		grapple_pt.translation = hook.get_collision_point()
+func handle_hook() -> void:
+	check_hook_activation()
+	var length := calculate_path()
+	draw_hook(length)
+	look_for_point()
 
 func check_hook_activation() -> void:
 	# Activate hook
@@ -56,17 +59,13 @@ func check_hook_activation() -> void:
 		hooked = true
 		grapple_position = hook.get_collision_point()
 		line.show()
+		$Sound.pitch_scale = randf() / 2 + .75
+		$Sound.play(0.0)
 	
 	# Stop grappling
 	elif Input.is_action_just_released("hook"):
 		hooked = false
 		line.hide()
-
-func handle_hook() -> void:
-	check_hook_activation()
-	var length := calculate_path()
-	draw_hook(length)
-	look_for_point()
 
 # Adds to player velocity and returns the length of the hook rope
 func calculate_path() -> float:
@@ -97,6 +96,11 @@ func draw_hook(length: float) -> void:
 	line_helper.look_at(grapple_position, Vector3.UP)
 	line.height = length
 	line.translation.z = length / -2
+
+func look_for_point() -> void:
+	var grapple_pt := get_node_or_null(grapple_point)
+	if grapple_pt and hook.is_colliding():
+		grapple_pt.translation = hook.get_collision_point()
 
 
 # CHARACTER CONTROLLER -------------------------------------------------
