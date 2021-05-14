@@ -163,9 +163,11 @@ func _input(event: InputEvent) -> void:
 		cam_helper.rotate_x(event.relative.y * -MOUSE_SENSITIVITY)
 		rotate_y(event.relative.x * -MOUSE_SENSITIVITY)
 		
-		var camera_rot = cam_helper.rotation_degrees
-		camera_rot.x = clamp(camera_rot.x, -90, 90)
-		cam_helper.rotation_degrees = camera_rot
+		cam_helper.rotation_degrees.x = clamp(
+			cam_helper.rotation_degrees.x, 
+			-90, 
+			90
+		)
 
 # Handles toggling mouse capture
 func handle_mouse_capture() -> void:
