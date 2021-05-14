@@ -28,11 +28,6 @@ material/0 = SubResource( 3 )
 
 [node name="CamHelper" type="Spatial" parent="."]
 
-[node name="Hook" type="RayCast" parent="CamHelper"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845428, 0 )
-enabled = true
-cast_to = Vector3( 0, 0, -400 )
-
 [node name="SpringArm" type="SpringArm" parent="CamHelper"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, 3 )
 spring_length = 8.0
@@ -42,12 +37,3 @@ margin = 0.5
 current = true
 near = 0.01
 far = 400.0
-
-[node name="LineHelper" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.691922, 0.26455, 0 )
-
-[node name="Line" type="CSGCylinder" parent="LineHelper"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -200.1 )
-visible = false
-radius = 0.1
-height = 28.564
