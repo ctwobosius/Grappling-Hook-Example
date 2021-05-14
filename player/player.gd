@@ -1,14 +1,14 @@
 class_name Player
 extends KinematicBody
 
-# Convenience nodes
+# Convenience Nodes
 onready var cam_helper := $CamHelper
 onready var hook := $CamHelper/Hook
 onready var line_helper := $LineHelper
 onready var line := $LineHelper/Line
 export var grapple_point : NodePath 
 
-# Player controller
+# Player Controller
 export var MOUSE_SENSITIVITY := .001
 export var speed := 4.0
 export var air_speed := .25
@@ -16,7 +16,7 @@ export var friction := .25  # Higher -> more friction
 export var jump_strength := 32.0
 var velocity := Vector3()
 
-# Grappling constants
+# Grappling
 export var max_grapple_speed := 2.75 # Self explanatory
 export var grapple_speed := .5
 """ Also known as the spring constant, this is how stiff your rope is. 
@@ -27,6 +27,7 @@ export var rest_length := 1.0
 """How far the player should rest from the grapple point"""
 var hooked := false
 var grapple_position := Vector3()
+
 
 func _ready() -> void:
 	# Capture mouse at start
@@ -40,6 +41,9 @@ func _physics_process(delta: float) -> void:
 		Engine.time_scale = .1
 	else:
 		Engine.time_scale = 1
+
+
+# HOOK STUFF ---------------------------------------------------------
 
 func look_for_point() -> void:
 	var grapple_pt := get_node_or_null(grapple_point)
@@ -88,12 +92,14 @@ func calculate_path() -> float:
 	
 	return length
 
-
 # Makes the line have length LENGTH
 func draw_hook(length: float) -> void:
 	line_helper.look_at(grapple_position, Vector3.UP)
 	line.height = length
 	line.translation.z = length / -2
+
+
+# CHARACTER CONTROLLER -------------------------------------------------
 
 func move(delta: float) -> void:
 	# Get player input (forwards/back/side)
