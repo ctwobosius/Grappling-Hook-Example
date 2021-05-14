@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://material/floor.material" type="Material" id=1]
 [ext_resource path="res://environment/sun.tscn" type="PackedScene" id=2]
-[ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://material/box.material" type="Material" id=4]
 
 [sub_resource type="BoxShape" id=1]
@@ -51,5 +50,3 @@ material_override = ExtResource( 4 )
 
 [node name="Hitbox" type="CollisionShape" parent="Environment/Boxes/Box3"]
 shape = SubResource( 1 )
-
-[node name="Player" parent="." instance=ExtResource( 3 )]
