@@ -1,0 +1,172 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://asset/material/floor.material" type="Material" id=1]
+[ext_resource path="res://src/player/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://asset/material/green.material" type="Material" id=3]
+[ext_resource path="res://src/environment/grapple_platforms.gd" type="Script" id=4]
+[ext_resource path="res://src/environment/sun.tscn" type="PackedScene" id=5]
+[ext_resource path="res://asset/material/box.material" type="Material" id=6]
+
+[sub_resource type="BoxShape" id=1]
+
+[node name="Main" type="Spatial"]
+
+[node name="Environment" type="Spatial" parent="."]
+
+[node name="Sunlight" parent="Environment" instance=ExtResource( 5 )]
+
+[node name="Floor" type="CSGBox" parent="Environment"]
+material_override = ExtResource( 1 )
+use_collision = true
+width = 200.0
+height = 1.0
+depth = 200.0
+
+[node name="Boxes" type="Spatial" parent="Environment"]
+
+[node name="Box" type="RigidBody" parent="Environment/Boxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.22252, -9.64223 )
+mass = 2.0
+
+[node name="Mesh" type="CSGBox" parent="Environment/Boxes/Box"]
+material_override = ExtResource( 6 )
+
+[node name="Hitbox" type="CollisionShape" parent="Environment/Boxes/Box"]
+shape = SubResource( 1 )
+
+[node name="Box2" type="RigidBody" parent="Environment/Boxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47332, 12.2393, -9.64223 )
+mass = 2.0
+
+[node name="Mesh" type="CSGBox" parent="Environment/Boxes/Box2"]
+material_override = ExtResource( 6 )
+
+[node name="Hitbox" type="CollisionShape" parent="Environment/Boxes/Box2"]
+shape = SubResource( 1 )
+
+[node name="Box3" type="RigidBody" parent="Environment/Boxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270512, 14.6235, -9.64223 )
+mass = 2.0
+
+[node name="Mesh" type="CSGBox" parent="Environment/Boxes/Box3"]
+material_override = ExtResource( 6 )
+
+[node name="Hitbox" type="CollisionShape" parent="Environment/Boxes/Box3"]
+shape = SubResource( 1 )
+
+[node name="GrappleThings" type="Spatial" parent="Environment"]
+script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Environment/GrappleThings"]
+anchor_right = 1.0
+margin_top = 17.0
+margin_bottom = 48.0
+text = "Press HOME to restart, Q/E to grapple,
+Click the game then press TAB to begin"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grapple thing" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.3459, 24.6303 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 31.2837
+height = 4.85819
+depth = 25.8052
+
+[node name="Grapple thing2" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.69819, -0.617442, 0.362348, 0.278689, 0.700618, 0.656862, -0.659442, -0.357632, 0.661238, -17.48, 41.4809, 13.0713 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 15.476
+height = 4.85819
+depth = 30.2716
+
+[node name="Grapple thing3" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, -38.5646, 68.219, 9.54915 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 8.76155
+depth = 17.5723
+
+[node name="Grapple thing4" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, 23.4246, 36.2759, 7.29769 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 20.577
+depth = 16.4405
+
+[node name="Grapple thing5" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, -39.8587, 35.1602, -20.8168 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 9.80752
+depth = 13.7314
+
+[node name="Grapple thing6" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, 1.57774, 26.5025, -46.8055 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 27.5229
+depth = 16.4405
+
+[node name="Grapple thing7" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.23999, 77.7442, 11.748 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 31.2837
+height = 4.85819
+depth = 25.8052
+
+[node name="Grapple thing8" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.69819, -0.617442, 0.362348, 0.278689, 0.700618, 0.656862, -0.659442, -0.357632, 0.661238, -8.24001, 100.879, 0.188991 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 15.476
+height = 4.85819
+depth = 30.2716
+
+[node name="Grapple thing9" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, -29.3246, 127.617, -3.33316 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 8.76155
+depth = 17.5723
+
+[node name="Grapple thing10" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, 32.6646, 95.6742, -5.58462 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 20.577
+depth = 16.4405
+
+[node name="Grapple thing11" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, -30.6187, 94.5585, -33.6991 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 9.80752
+depth = 13.7314
+
+[node name="Grapple thing12" type="CSGBox" parent="Environment/GrappleThings"]
+transform = Transform( 0.709022, 0.279072, -0.647616, -0.605667, 0.711363, -0.356554, 0.361185, 0.645044, 0.673397, 10.8177, 85.9008, -59.6878 )
+material_override = ExtResource( 3 )
+use_collision = true
+width = 12.366
+height = 27.5229
+depth = 16.4405
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+grapple_point = NodePath("../GrapplePoint")
+
+[node name="GrapplePoint" type="CSGSphere" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1626, 0 )
+radius = 0.25
