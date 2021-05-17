@@ -2,7 +2,7 @@
 How to grapple hook (in Godot 3.3) using Hooke's law. If you make something
 with this, it'd be nice to let me know or credit me! (Calvin Wong)
 
-![alt text](demo.png "Screenshot :)")
+![alt text](docs/demo.png "Screenshot :)")
 
 The equation:
 F<sub>s</sub> = k<sub>s</sub> * (distance(p<sub>a</sub>, p<sub>b</sub>) - L)
